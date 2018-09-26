@@ -73,11 +73,12 @@ def session():
 
 def wait_cooltime(cnt):
     if cnt != 0: sleep(2);
+    sz = 8 if cnt == 0 else 1
     id = load_id()
-    URI = '/submission_records/users/{}?size={}'.format(id, 1)
+    URI = '/submission_records/users/{}?size={}'.format(id, sz)
     res = requests.get(endpoint + URI)
-    if len(res.json()) == 0: return;
-    prev = datetime.fromtimestamp(res.json()[0]['submissionDate'] // 1000)
+    if len(res.json()) < sz: return;
+    prev = datetime.fromtimestamp(res.json()[-1]['submissionDate'] // 1000)
     curr = datetime.now()
     if prev + timedelta(seconds = 70) < curr: return;
     d = prev + timedelta(seconds = 70) - curr
