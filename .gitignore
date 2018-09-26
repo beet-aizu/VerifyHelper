@@ -292,6 +292,7 @@ venv.bak/
 hs_err_pid*
 
 
+.*
 setup.*
 bin
 rime-out
